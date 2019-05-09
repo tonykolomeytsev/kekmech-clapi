@@ -55,31 +55,31 @@ void Clapi::checkFirstQuery() {
 
 Clapi* Clapi::query(const char *key, const char *value) {
     checkFirstQuery();
-    s->printf("%s:\'%s\'", key, value);
+    s->printf("%s:\'%s\',", key, value);
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const int value) {
     checkFirstQuery();
-    s->printf("%s:%d", key, value);
+    s->printf("%s:%d,", key, value);
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const float value) {
     checkFirstQuery();
-    s->printf("%s:%f", key, value);
+    s->printf("%s:%f,", key, value);
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const bool value) {
     checkFirstQuery();
-    s->printf("%s:%s", key, value ? "true" : "false");
+    s->printf("%s:%s,", key, value ? "true" : "false");
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const char value) {
     checkFirstQuery();
-    s->printf("%s:%c", key, value);
+    s->printf("%s:%c,", key, value);
     return this;
 }
 
