@@ -23,7 +23,7 @@ Raspberry Pi can send multiple float arguments.
 #include <Clapi.h>
 
 // connect to Raspberry Pi via USB
-Clapi api(USBTX, USBRX, CLAPPY_BAUD_115200);
+Clapi *api = new Clapi(USBTX, USBRX);
 
 // this function will be launched by interrupt
 void listener(int code, int argsCount, float args[]) {
@@ -34,7 +34,7 @@ void listener(int code, int argsCount, float args[]) {
 
 int main() {
     // you can use lambda intead function reference
-    api.setMessageListener(listener);
+    api->setMessageListener(listener);
 
     while(1) {
         sleep();
