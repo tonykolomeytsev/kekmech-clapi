@@ -1,11 +1,12 @@
+#include <mbed.h>
 #include <Clapi.h>
 
 Clapi::Clapi(RawSerial &serial)  {
     this->s = &serial;
 }
 
-Clapi::Clapi(PinName tx, PinName rx, int baud) {
-    this->s = new RawSerial(tx, rx, baud);
+Clapi::Clapi(PinName tx, PinName rx) {
+    this->s = new RawSerial(tx, rx, MBED_CONF_PLATFORM_DEFAULT_SERIAL_BAUD_RATE);
 }
 
 Clapi::~Clapi() {

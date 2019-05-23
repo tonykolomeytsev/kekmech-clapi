@@ -23,7 +23,7 @@ Raspberry Pi can send multiple float arguments.
 #include <Clapi.h>
 
 // connect to Raspberry Pi via USB
-Clapi api(USBTX, USBRX, CLAPPY_BAUD_115200);
+Clapi api(USBTX, USBRX);
 
 // this function will be launched by interrupt
 void listener(int code, int argsCount, float args[]) {

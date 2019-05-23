@@ -23,7 +23,7 @@ public:
     /**
      * Конструктор, самостоятельно создающий serial объект подключенный к пинам tx, rx.
      **/
-    Clapi(PinName tx, PinName rx, int baud = MBED_CONF_PLATFORM_DEFAULT_SERIAL_BAUD_RATE);
+    Clapi(PinName tx, PinName rx);
 
     /**
      * Деструктор
