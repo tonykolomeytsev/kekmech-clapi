@@ -1,7 +1,8 @@
 #include <mbed.h>
 
 #define ARG_BYTES_COUNT 4
-#define CLAPPY_BAUD_115200 115200
+#define CLAPPY_BAUD     115200
+#define CMD_HANDSHAKE   0x13
 
 /**
  * Clapi предназначен для упрощения передачи данных между микрокронтроллером и одноплатным компьютером.
@@ -22,7 +23,7 @@ public:
     /**
      * Конструктор, самостоятельно создающий serial объект подключенный к пинам tx, rx.
      **/
-    Clapi(PinName tx, PinName rx, int baud = MBED_CONF_PLATFORM_DEFAULT_SERIAL_BAUD_RATE);
+    Clapi(PinName tx, PinName rx);
 
     /**
      * Деструктор
@@ -43,6 +44,7 @@ public:
     Clapi* query(const char *key, const float value);
     Clapi* query(const char *key, const bool value);
     Clapi* query(const char *key, const char value);
+    Clapi* response(const int code);
     void send();
 
 protected:
