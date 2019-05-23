@@ -6,7 +6,7 @@ Clapi::Clapi(RawSerial &serial)  {
 }
 
 Clapi::Clapi(PinName tx, PinName rx) {
-    this->s = new RawSerial(tx, rx, MBED_CONF_PLATFORM_DEFAULT_SERIAL_BAUD_RATE);
+    this->s = new RawSerial(tx, rx, CLAPPY_BAUD); //MBED_CONF_PLATFORM_DEFAULT_SERIAL_BAUD_RATE);
 }
 
 Clapi::~Clapi() {
@@ -50,47 +50,49 @@ void Clapi::processInput() {
 void Clapi::checkFirstQuery() {
     if (isFirstQuery) {
         s->putc('{');
-        isFirstQuery = false;
+    } else {
+        s->putc(',');
     }
+    isFirstQuery = false;
 }
 
 Clapi* Clapi::query(const char *key, const char *value) {
     checkFirstQuery();
-    s->printf("%s:\'%s\',", key, value);
+    s->printf("\"%s\":\"%s\"", key, value);
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const int value) {
     checkFirstQuery();
-    s->printf("%s:%d,", key, value);
+    s->printf("\"%s\":%d", key, value);
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const float value) {
     checkFirstQuery();
-    s->printf("%s:%f,", key, value);
+    s->printf("\"%s\":%f", key, value);
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const bool value) {
     checkFirstQuery();
-    s->printf("%s:%s,", key, value ? "true" : "false");
+    s->printf("\"%s\":%s", key, value ? "true" : "false");
     return this;
 }
 
 Clapi* Clapi::query(const char *key, const char value) {
     checkFirstQuery();
-    s->printf("%s:%c,", key, value);
+    s->printf("\"%s\":%c", key, value);
     return this;
 }
 
 Clapi* Clapi::response(const int code) {
     checkFirstQuery();
-    s->printf("code:%d", code);
+    s->printf("\"code\":%d", code);
     return this;
 }
 
 void Clapi::send() {
-    s->puts("}\n");
+    s->puts("}\r\n");
     isFirstQuery = true;
 }
