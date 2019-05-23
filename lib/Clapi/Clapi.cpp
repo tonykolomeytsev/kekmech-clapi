@@ -83,6 +83,12 @@ Clapi* Clapi::query(const char *key, const char value) {
     return this;
 }
 
+Clapi* Clapi::response(const int code) {
+    checkFirstQuery();
+    s->printf("code:%d", code);
+    return this;
+}
+
 void Clapi::send() {
     s->puts("}\n");
     isFirstQuery = true;

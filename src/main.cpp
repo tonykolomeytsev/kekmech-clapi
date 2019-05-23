@@ -1,10 +1,12 @@
 #include <mbed.h>
 #include <Clapi.h>
 
-Clapi api(USBTX, USBRX, CLAPPY_BAUD_115200);
+Clapi api(USBTX, USBRX);
 
 void listener(int code, int argsCount, float args[]) {
-
+    if (code == 1) {
+        printf("kek");
+    }
 }
 
 int main() {
