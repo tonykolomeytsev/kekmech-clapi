@@ -98,7 +98,7 @@ Clapi* Clapi::response(const int code) {
 void Clapi::send(const int code) {
     checkFirstQuery();
     s->printf("\"code\":%d}\r\n", code);
-    isFirstQuery = false;
+    isFirstQuery = true;
 }
 
 void Clapi::send() {
