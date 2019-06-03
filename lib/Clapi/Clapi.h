@@ -14,16 +14,17 @@ private:
     RawSerial *s;
     void (*listener)(int code, int argsCount, float args[]) = NULL;
     bool isFirstQuery = true;
+    char *device_id = NULL;
 public:
     /**
      * Конструктор, которому можно передать ссылку на кастомный serial объект.
      **/
-    Clapi(RawSerial &serial);
+    Clapi(RawSerial &serial, const char* device_id = NULL);
 
     /**
      * Конструктор, самостоятельно создающий serial объект подключенный к пинам tx, rx.
      **/
-    Clapi(PinName tx, PinName rx);
+    Clapi(PinName tx, PinName rx, const char* device_id = NULL);
 
     /**
      * Деструктор
@@ -44,8 +45,9 @@ public:
     Clapi* query(const char *key, const float value);
     Clapi* query(const char *key, const bool value);
     Clapi* query(const char *key, const char value);
-    Clapi* response(const int code);
-    void send();
+    Clapi* response(const int code); // прикрепляет к ответу поле "code"
+    void send(); // отправляет сообщение
+    void send(const int code); // прикрепляет к ответу поле "code" после чего отправляет сообщение
 
 protected:
     /**
@@ -55,4 +57,6 @@ protected:
     void processInput();
     
     void checkFirstQuery();
+
+    void invokeSystemListener(int code, int argsCount, float args[]); // для обработки системных команд вроде HANDSHAKE
 };

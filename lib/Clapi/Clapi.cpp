@@ -1,12 +1,14 @@
 #include <mbed.h>
 #include <Clapi.h>
 
-Clapi::Clapi(RawSerial &serial)  {
+Clapi::Clapi(RawSerial &serial, const char* device_id)  {
     this->s = &serial;
+    this->device_id = const_cast<char*>(device_id);
 }
 
-Clapi::Clapi(PinName tx, PinName rx) {
+Clapi::Clapi(PinName tx, PinName rx, const char* device_id) {
     this->s = new RawSerial(tx, rx, CLAPPY_BAUD); //MBED_CONF_PLATFORM_DEFAULT_SERIAL_BAUD_RATE);
+    this->device_id = const_cast<char*>(device_id);
 }
 
 Clapi::~Clapi() {
@@ -26,6 +28,7 @@ void Clapi::processInput() {
     int argsCount = s->getc();
 
     if (argsCount == 0) {
+        invokeSystemListener(code, argsCount, NULL); // в случае, если пришла какая-то системная команда, обработаем её
         if (listener != NULL) this->listener(code, argsCount, NULL);
     } else {
         // выделяем память под массив агрументов
@@ -92,7 +95,23 @@ Clapi* Clapi::response(const int code) {
     return this;
 }
 
+void Clapi::send(const int code) {
+    checkFirstQuery();
+    s->printf("\"code\":%d}\r\n", code);
+    isFirstQuery = true;
+}
+
 void Clapi::send() {
     s->puts("}\r\n");
     isFirstQuery = true;
+}
+
+void Clapi::invokeSystemListener(int code, int argsCount, float args[]) {
+    switch (code) {
+    case CMD_HANDSHAKE:
+        if (this->device_id != NULL)
+            this->query("device_id", this->device_id)
+                ->send(CMD_HANDSHAKE);
+        break;
+    }
 }
