@@ -2,6 +2,10 @@
 
 A library for transferring data between STM32 Nucleo and Raspberry Pi using Serial. The library is intended to be used with ARM mbed OS v 5.1 and higher.
 
+![alt text](https://raw.githubusercontent.com/tonykolomeytsev/kekmech-clapi-nucleo/master/img.png)
+
+Visit the [wiki page](https://github.com/tonykolomeytsev/kekmech-clapi-raspberry/wiki) to understand how it works.
+
 ## Installing
 
 Just copy the lib/Clapi folder to your ARM mbed OS project.
