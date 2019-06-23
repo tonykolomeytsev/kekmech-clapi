@@ -89,6 +89,28 @@ Clapi* Clapi::query(const char *key, const char value) {
     return this;
 }
 
+Clapi* Clapi::query(const char* key, const int array_value[], const int array_size) {
+    checkFirstParam();
+    s_>printf("\"%s\":[", key);
+    for (int i = 0; i < array_size; i++) {
+        if (i > 0) s->printf(',%d', array_value[i]);
+        else s->printf('%d', array_value[i]);
+    }
+    s->print(']');
+    return this;
+}
+
+Clapi* Clapi::query(const char* key, const float array_value[], const int array_size) {
+    checkFirstParam();
+    s_>printf("\"%s\":[", key);
+    for (int i = 0; i < array_size; i++) {
+        if (i > 0) s->printf(',%f', array_value[i]);
+        else s->printf('%f', array_value[i]);
+    }
+    s->print(']');
+    return this;
+}
+
 Clapi* Clapi::response(const int code) {
     checkFirstQuery();
     s->printf("\"code\":%d", code);

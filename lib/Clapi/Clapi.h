@@ -45,6 +45,8 @@ public:
     Clapi* query(const char *key, const float value);
     Clapi* query(const char *key, const bool value);
     Clapi* query(const char *key, const char value);
+    Clapi* query(const char* key, const int array_value[], const int array_size);
+    Clapi* query(const char* key, const float array_value[], const int array_size);
     Clapi* response(const int code); // прикрепляет к ответу поле "code"
     void send(); // отправляет сообщение
     void send(const int code); // прикрепляет к ответу поле "code" после чего отправляет сообщение
